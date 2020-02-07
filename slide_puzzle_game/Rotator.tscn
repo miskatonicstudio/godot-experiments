@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Rotator.gd" type="Script" id=1]
+
+[node name="Rotator" type="Spatial"]
+
+script = ExtResource( 1 )
+SENSITIVITY_X = 1.0
+SENSITIVITY_Y = 1.0
+
+
