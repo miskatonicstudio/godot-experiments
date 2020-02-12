@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Terrain Shader"
-config/icon="res://icon.png"
+run/main_scene="res://Terrain.tscn"
 
 [rendering]
 

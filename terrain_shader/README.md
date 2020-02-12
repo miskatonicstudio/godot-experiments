@@ -4,7 +4,7 @@
 
 A simple spatial shader that mixes 2 textures depending on the terrain slope.
 
-Inspired by [this tutorial](http://ffxrunner2.ffx.it/simple-terrain-shader-tutorial/)
+Inspired by [this tutorial](http://ffxrunner2.ffx.it/simple-terrain-shader-tutorial/).
 
 ## Resourses used
 
