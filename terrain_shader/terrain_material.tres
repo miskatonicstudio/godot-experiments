@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[ext_resource path="res://terrain_shader.shader" type="Shader" id=1]
+[ext_resource path="res://rock.jpg" type="Texture" id=2]
+[ext_resource path="res://grass.jpg" type="Texture" id=3]
+
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/mix_amount = 0.987
+shader_param/transition = 10.0
+shader_param/grass = ExtResource( 3 )
+shader_param/rock = ExtResource( 2 )
