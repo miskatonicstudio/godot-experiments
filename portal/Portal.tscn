@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Portal.gd" type="Script" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.658824, 0.235294, 0.235294, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.133333, 0.729412, 0.788235, 1 )
+
+[sub_resource type="QuadMesh" id=9]
+size = Vector2( 100, 100 )
+
+[sub_resource type="QuadMesh" id=7]
+size = Vector2( 1, 2 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_unshaded = true
+albedo_color = Color( 1, 0, 1, 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "rotate"
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("BlueCube:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 104.556 ) ]
+}
+
+[node name="Portal" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="RedCube1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.83637, 0, -7.10904 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="RedCube2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4261, 0, -7.10904 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="BlueCube" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.54676, 0, -6.99819 )
+layers = 2
+mesh = SubResource( 1 )
+material/0 = SubResource( 3 )
+
+[node name="Background" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.54676, 0, -12.6714 )
+layers = 2
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="Portal" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.209, 1, -3.468 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.77115, -4.03839 )
+layers = 7
+omni_range = 15.0
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1024, 600 )
+keep_3d_linear = true
+
+[node name="Camera" type="Camera" parent="Viewport"]
+cull_mask = 1048574
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "rotate"
+anims/rotate = SubResource( 4 )
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
