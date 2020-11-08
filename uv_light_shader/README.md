@@ -1,5 +1,7 @@
 # Godot UV light shader
 
+![Screenshot](./screenshot.jpg?raw=true)
+
 This is an example of a "UV light" shader, useful for secret messages.
 
 Remember to:
