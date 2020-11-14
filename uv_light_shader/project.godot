@@ -16,3 +16,4 @@ _global_script_class_icons={
 [application]
 
 config/name="UV Light Shader"
+run/main_scene="res://UVLight.tscn"
