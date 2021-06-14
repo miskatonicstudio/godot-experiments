@@ -14,7 +14,7 @@ noise = SubResource( 3 )
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
 shader_param/height_scale = 2.0
-shader_param/alpha = 0.441284
+shader_param/alpha = 1.0
 shader_param/color = Color( 0, 1, 1, 1 )
 shader_param/noise = SubResource( 4 )
 
