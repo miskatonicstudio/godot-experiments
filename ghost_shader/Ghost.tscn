@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://ghost_shader.shader" type="Shader" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=3]
+period = 20.0
+
+[sub_resource type="NoiseTexture" id=4]
+width = 64
+height = 64
+seamless = true
+noise = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/height_scale = 2.0
+shader_param/alpha = 0.441284
+shader_param/color = Color( 0, 1, 1, 1 )
+shader_param/noise = SubResource( 4 )
+
+[sub_resource type="SphereMesh" id=2]
+radial_segments = 128
+rings = 64
+
+[sub_resource type="Animation" id=5]
+resource_name = "show_ghost"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Model:material_override:shader_param/alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0, 0.0 ]
+}
+
+[node name="Ghost" type="Spatial"]
+
+[node name="Model" type="MeshInstance" parent="."]
+material_override = SubResource( 1 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "show_ghost"
+anims/show_ghost = SubResource( 5 )
