@@ -2,6 +2,7 @@
 
 A collection of simple experiments in Godot Engine
 
+![Screenshot](./aurora_borealis/screenshot.png?raw=true)
 ![Screenshot](./engine_flame_shader/screenshot.png?raw=true)
 ![Screenshot](./electric_wire_shader/screenshot.png?raw=true)
 ![Screenshot](./ghost_shader/screenshot.png?raw=true)
