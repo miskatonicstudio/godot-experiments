@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://b54m703phym4d"]
+
+[ext_resource type="ArrayMesh" uid="uid://cpd6vps8r82q" path="res://wire.obj" id="1"]
+[ext_resource type="Shader" path="res://wire.gdshader" id="2"]
+[ext_resource type="Environment" uid="uid://cyqtqsjmxq60e" path="res://default_env.tres" id="3_o3es5"]
+
+[sub_resource type="ShaderMaterial" id="2"]
+render_priority = 0
+shader = ExtResource("2")
+shader_parameter/width = 0.05
+shader_parameter/speed = 0.5
+shader_parameter/color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="1"]
+next_pass = SubResource("2")
+albedo_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+roughness = 0.45
+
+[node name="WireShader" type="Node3D"]
+
+[node name="Wire" type="MeshInstance3D" parent="."]
+material_override = SubResource("1")
+mesh = ExtResource("1")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2, 1.5)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_o3es5")
