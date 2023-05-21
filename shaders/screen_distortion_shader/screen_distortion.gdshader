@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
-uniform sampler2D noise;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture;
+uniform sampler2D noise : repeat_enable, filter_linear_mipmap;
 uniform float speed = 0.1;
 uniform float scale = 0.5;
 
