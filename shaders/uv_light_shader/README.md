@@ -1,4 +1,4 @@
-# Godot UV light shader
+# Godot UV light shader ![Godot v4.0.3](https://img.shields.io/badge/godot-v4.0.3-%23478cbf)
 
 ![Screenshot](./screenshot.jpg?raw=true)
 
