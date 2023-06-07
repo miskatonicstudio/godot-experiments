@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcs7mbvdlu6oa"]
+
+[ext_resource type="Shader" path="res://pride_flag.gdshader" id="1_kwgjv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dlnuu"]
+render_priority = 0
+shader = ExtResource("1_kwgjv")
+shader_parameter/flag_type = 3
+
+[sub_resource type="QuadMesh" id="QuadMesh_br36m"]
+size = Vector2(2, 1)
+subdivide_width = 10
+subdivide_depth = 10
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tkkwe"]
+ground_bottom_color = Color(0.121569, 0.176471, 0.270588, 1)
+
+[sub_resource type="Sky" id="Sky_mm3y3"]
+sky_material = SubResource("ProceduralSkyMaterial_tkkwe")
+
+[sub_resource type="Environment" id="Environment_v0uop"]
+background_mode = 2
+sky = SubResource("Sky_mm3y3")
+
+[node name="Flag" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_dlnuu")
+mesh = SubResource("QuadMesh_br36m")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v0uop")
