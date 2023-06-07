@@ -5,7 +5,7 @@ A collection of simple experiments in Godot Engine. Currently the shaders are mi
 ![Screenshot](./aurora_borealis/screenshot.png?raw=true)
 ![Screenshot](./shaders/uv_light_shader/screenshot.jpg?raw=true)
 ![Screenshot](./shaders/screen_distortion_shader/screenshot.png?raw=true)
-![Screenshot](./shaders/pride_flag/screenshot.jpg?raw=true)
+![Screenshot](./shaders/pride_flag_shader/screenshot.jpg?raw=true)
 ![Screenshot](./engine_flame_shader/screenshot.png?raw=true)
 ![Screenshot](./shaders/electric_wire_shader/screenshot.png?raw=true)
 ![Screenshot](./ghost_shader/screenshot.png?raw=true)
