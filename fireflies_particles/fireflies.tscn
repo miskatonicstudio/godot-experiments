@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwxyolu3myf67"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b4b0u"]
+albedo_color = Color(0.188235, 0.188235, 0.188235, 0)
+emission_enabled = true
+emission = Color(0, 0.823529, 0, 1)
+emission_energy_multiplier = 11.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_q0b5r"]
+radius = 0.03
+height = 0.06
+radial_segments = 12
+rings = 6
+
+[sub_resource type="Curve" id="Curve_7vdo0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.17033, 0.852632), 1.23158, 1.23158, 0, 0, Vector2(0.813187, 0.831579), -0.741596, -0.741596, 0, 0, Vector2(1, 0), -6.76161, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_46qw4"]
+sky_top_color = Color(0.105882, 0.192157, 0.333333, 1)
+sky_horizon_color = Color(0.172549, 0.176471, 0.184314, 1)
+ground_bottom_color = Color(0.0352941, 0.12549, 0.141176, 1)
+ground_horizon_color = Color(0.172549, 0.176471, 0.184314, 1)
+
+[sub_resource type="Sky" id="Sky_bvmeh"]
+sky_material = SubResource("ProceduralSkyMaterial_46qw4")
+
+[sub_resource type="Environment" id="Environment_6tiva"]
+background_mode = 2
+sky = SubResource("Sky_bvmeh")
+ssr_enabled = true
+ssao_enabled = true
+glow_enabled = true
+glow_levels/1 = 0.5
+glow_levels/2 = 0.5
+glow_levels/3 = 0.5
+glow_levels/4 = 0.5
+glow_levels/5 = 0.5
+glow_levels/6 = 0.5
+glow_strength = 1.4
+glow_blend_mode = 1
+
+[node name="Fireflies" type="Node3D"]
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_b4b0u")
+lifetime = 8.0
+randomness = 0.1
+mesh = SubResource("SphereMesh_q0b5r")
+emission_shape = 3
+emission_box_extents = Vector3(2, 2, 2)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.1
+initial_velocity_max = 0.11
+linear_accel_min = 0.02
+linear_accel_max = 0.03
+scale_amount_curve = SubResource("Curve_7vdo0")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6tiva")
