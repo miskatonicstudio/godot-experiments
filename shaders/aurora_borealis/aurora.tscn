@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://iambpuaqot0s"]
+
+[ext_resource type="Shader" path="res://aurora.gdshader" id="1_dj7yk"]
+
+[sub_resource type="FastNoiseLite" id="14"]
+frequency = 0.0039
+fractal_octaves = 3
+fractal_weighted_strength = 0.5
+
+[sub_resource type="NoiseTexture2D" id="15"]
+normalize = false
+noise = SubResource("14")
+
+[sub_resource type="ShaderMaterial" id="3"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_dj7yk")
+shader_parameter/speed = 0.01
+shader_parameter/color = Color(0.38, 0.92, 0.43, 1)
+shader_parameter/emission_strength = 5.0
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.02
+shader_parameter/noise = SubResource("15")
+
+[sub_resource type="BoxMesh" id="1"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pn7pn"]
+sky_energy_multiplier = 0.0
+ground_bottom_color = Color(0.156863, 0.184314, 0.211765, 1)
+ground_horizon_color = Color(0.423529, 0.396078, 0.372549, 1)
+sun_curve = 0.05
+
+[sub_resource type="Sky" id="Sky_b2bb8"]
+sky_material = SubResource("ProceduralSkyMaterial_pn7pn")
+radiance_size = 2
+
+[sub_resource type="Environment" id="Environment_wchvq"]
+background_mode = 2
+sky = SubResource("Sky_b2bb8")
+
+[node name="Aurora" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("3")
+mesh = SubResource("1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wchvq")

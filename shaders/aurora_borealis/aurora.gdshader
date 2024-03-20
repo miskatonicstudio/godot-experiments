@@ -1,7 +1,7 @@
 shader_type spatial;
 
 uniform float speed = 0.02;
-uniform vec4 color : hint_color;
+uniform vec4 color : source_color;
 uniform float emission_strength = 5.0;
 uniform sampler2D noise;
 uniform float offset = 0.0;
@@ -12,8 +12,8 @@ uniform float scale = 1.0;
 varying vec3 world_camera;
 varying vec3 world_position;
 
-const float STEP = 0.001;
-const float BASE_DENSITY = 5.0;
+const float STEP = 0.01;
+const float BASE_DENSITY = 2.0;
 
 float amplify(float value) {
 	float magic_number = 0.166504;
@@ -56,9 +56,8 @@ float ray_march(vec3 ray_origin, vec3 ray_direction, float start, float time) {
 		}
 		vec2 uv = vec2((point.x + 1.0) * 0.5, (point.z + 1.0) * 0.5);
 		float wave_value = random_wave(uv);
-		float extra_noise = texture(noise, vec2(point.y, 0.0)).r;
 		float height_factor = (1.0 - point.y) * 0.5;
-		float point_density = BASE_DENSITY * STEP * height_factor * wave_value * extra_noise;
+		float point_density = BASE_DENSITY * STEP * height_factor * wave_value;
 		density += point_density;
 		dist += STEP;
 	}

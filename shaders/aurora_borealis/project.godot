@@ -6,18 +6,15 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
+config_version=5
 
 [application]
 
 config/name="Aurora Borealis"
-run/main_scene="res://Aurora.tscn"
+run/main_scene="res://aurora.tscn"
+config/features=PackedStringArray("4.1")
 config/icon="res://icon.png"
 
 [physics]
 
 common/enable_pause_aware_picking=true
-
-[rendering]
-
-environment/default_environment="res://night_sky_environment.tres"
