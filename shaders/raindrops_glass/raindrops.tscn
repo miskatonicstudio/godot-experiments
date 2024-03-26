@@ -1,0 +1,107 @@
+[gd_scene load_steps=16 format=3 uid="uid://cgd87sr65rhwl"]
+
+[ext_resource type="Shader" path="res://glass.gdshader" id="1_dnb5k"]
+[ext_resource type="Shader" path="res://normal.gdshader" id="2_at0l1"]
+
+[sub_resource type="ViewportTexture" id="8"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_dnb5k")
+shader_parameter/distortion_size = 0.2
+shader_parameter/brightness = 4.0
+shader_parameter/glass = SubResource("8")
+
+[sub_resource type="QuadMesh" id="7"]
+size = Vector2(4, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xu1nu"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="PrismMesh" id="16"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yp3ur"]
+albedo_color = Color(0.666667, 0.87451, 0.278431, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g2khj"]
+height = 1.0
+
+[sub_resource type="ShaderMaterial" id="3"]
+render_priority = 0
+shader = ExtResource("2_at0l1")
+shader_parameter/normal_factor = 1.0
+
+[sub_resource type="QuadMesh" id="4"]
+size = Vector2(20, 20)
+
+[sub_resource type="ParticleProcessMaterial" id="10"]
+lifetime_randomness = 0.1
+emission_shape = 3
+emission_box_extents = Vector3(10, 10, 1)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+linear_accel_min = 5.0
+linear_accel_max = 5.0
+scale_min = 0.2
+scale_max = 0.2
+
+[sub_resource type="Curve" id="Curve_jh1xk"]
+_data = [Vector2(0, 0.421053), 0.0, 8.46491, 0, 0, Vector2(0.0880829, 1), 0.478019, 0.478019, 0, 0, Vector2(1, 0.294737), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c7621"]
+render_priority = 0
+shader = ExtResource("2_at0l1")
+shader_parameter/normal_factor = -1.0
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_bm21v"]
+material = SubResource("ShaderMaterial_c7621")
+curve = SubResource("Curve_jh1xk")
+
+[node name="Raindrops" type="Node3D"]
+
+[node name="Glass" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+material_override = SubResource("6")
+mesh = SubResource("7")
+
+[node name="Object1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+material_override = SubResource("StandardMaterial3D_xu1nu")
+mesh = SubResource("16")
+
+[node name="Object2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+material_override = SubResource("StandardMaterial3D_yp3ur")
+mesh = SubResource("CylinderMesh_g2khj")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(2048, 2048)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0, 0, 10)
+projection = 1
+size = 20.0
+
+[node name="Background" type="MeshInstance3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0, 0, -3)
+material_override = SubResource("3")
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="Particles" type="GPUParticles3D" parent="SubViewport"]
+amount = 100
+lifetime = 5.0
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.8
+process_material = SubResource("10")
+draw_pass_1 = SubResource("TubeTrailMesh_bm21v")
