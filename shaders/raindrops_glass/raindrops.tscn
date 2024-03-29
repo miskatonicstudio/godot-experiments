@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://cgd87sr65rhwl"]
+[gd_scene load_steps=19 format=3 uid="uid://cgd87sr65rhwl"]
 
 [ext_resource type="Shader" path="res://glass.gdshader" id="1_dnb5k"]
+[ext_resource type="Script" path="res://raindrops.gd" id="1_ymfqy"]
 [ext_resource type="Shader" path="res://normal.gdshader" id="2_at0l1"]
+[ext_resource type="VideoStream" path="res://raindrops.ogv" id="3_71dpu"]
 
-[sub_resource type="ViewportTexture" id="8"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ti26g"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="6"]
@@ -12,10 +14,16 @@ render_priority = 0
 shader = ExtResource("1_dnb5k")
 shader_parameter/distortion_size = 0.2
 shader_parameter/brightness = 4.0
-shader_parameter/glass = SubResource("8")
+shader_parameter/glass = SubResource("ViewportTexture_ti26g")
 
 [sub_resource type="QuadMesh" id="7"]
-size = Vector2(4, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hwa3a"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_dnb5k")
+shader_parameter/distortion_size = 0.2
+shader_parameter/brightness = 4.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xu1nu"]
 albedo_color = Color(0, 1, 0, 1)
@@ -64,10 +72,16 @@ material = SubResource("ShaderMaterial_c7621")
 curve = SubResource("Curve_jh1xk")
 
 [node name="Raindrops" type="Node3D"]
+script = ExtResource("1_ymfqy")
 
-[node name="Glass" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+[node name="GlassParticles" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 1)
 material_override = SubResource("6")
+mesh = SubResource("7")
+
+[node name="GlassVideo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 1)
+material_override = SubResource("ShaderMaterial_hwa3a")
 mesh = SubResource("7")
 
 [node name="Object1" type="MeshInstance3D" parent="."]
@@ -105,3 +119,12 @@ trail_enabled = true
 trail_lifetime = 0.8
 process_material = SubResource("10")
 draw_pass_1 = SubResource("TubeTrailMesh_bm21v")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+custom_minimum_size = Vector2(2048, 2048)
+offset_right = 2048.0
+offset_bottom = 2048.0
+stream = ExtResource("3_71dpu")
+autoplay = true
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
