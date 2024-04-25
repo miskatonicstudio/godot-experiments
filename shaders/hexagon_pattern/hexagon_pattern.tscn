@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpymbm5cot8va"]
+
+[ext_resource type="Shader" path="res://hexagon_pattern.gdshader" id="1_jg5vm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_obhja"]
+render_priority = 0
+shader = ExtResource("1_jg5vm")
+shader_parameter/scale = 8.0
+shader_parameter/radius = 1.0
+shader_parameter/offset = 0.268
+shader_parameter/cutoff = 0.0
+shader_parameter/falloff = 4.0
+shader_parameter/hide_incomplete = false
+shader_parameter/color = Color(0.05, 0.4, 0.75, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_seg03"]
+
+[node name="HexagonPattern" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_obhja")
+mesh = SubResource("QuadMesh_seg03")
