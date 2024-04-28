@@ -9,6 +9,7 @@ A collection of simple experiments in Godot Engine. Currently the shaders are mi
 ![Screenshot](./shaders/screen_distortion_shader/screenshot.png?raw=true)
 ![Screenshot](./shaders/pride_flag_shader/screenshot.jpg?raw=true)
 ![Screenshot](./shaders/hexagon_pattern/screenshot.jpg?raw=true)
+![Screenshot](./shaders/burning_paper/screenshot.jpg?raw=true)
 ![Screenshot](./engine_flame_shader/screenshot.png?raw=true)
 ![Screenshot](./shaders/electric_wire_shader/screenshot.png?raw=true)
 ![Screenshot](./ghost_shader/screenshot.png?raw=true)

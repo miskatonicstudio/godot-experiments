@@ -1,0 +1,34 @@
+[gd_scene load_steps=9 format=3 uid="uid://rqsp1cujmmtp"]
+
+[ext_resource type="Shader" path="res://burning_paper.gdshader" id="1_xhbcc"]
+[ext_resource type="Texture2D" uid="uid://5q2yvqft25ta" path="res://parchment_alpha.png" id="2_adh6i"]
+
+[sub_resource type="Gradient" id="Gradient_ghhvy"]
+offsets = PackedFloat32Array(0, 0.0502513, 0.2, 0.21, 0.215, 0.225)
+colors = PackedColorArray(1, 1, 1, 1, 0.671795, 0.671795, 0.671795, 1, 0.18359, 0.18359, 0.18359, 1, 0.619608, 0.0313726, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7h2b2"]
+gradient = SubResource("Gradient_ghhvy")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ns1km"]
+frequency = 0.005
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xsngp"]
+noise = SubResource("FastNoiseLite_ns1km")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3gr06"]
+render_priority = 0
+shader = ExtResource("1_xhbcc")
+shader_parameter/emission_strength = 1.0
+shader_parameter/burn = 0.34
+shader_parameter/tex = ExtResource("2_adh6i")
+shader_parameter/noise = SubResource("NoiseTexture2D_xsngp")
+shader_parameter/gradient = SubResource("GradientTexture1D_7h2b2")
+
+[sub_resource type="QuadMesh" id="QuadMesh_671fo"]
+
+[node name="BurningPaper" type="Node3D"]
+
+[node name="Sheet" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_3gr06")
+mesh = SubResource("QuadMesh_671fo")
