@@ -1,14 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://rqsp1cujmmtp"]
 
+[ext_resource type="Script" path="res://burning_paper.gd" id="1_lunqn"]
 [ext_resource type="Shader" path="res://burning_paper.gdshader" id="1_xhbcc"]
-[ext_resource type="Texture2D" uid="uid://5q2yvqft25ta" path="res://parchment_alpha.png" id="2_adh6i"]
-
-[sub_resource type="Gradient" id="Gradient_ghhvy"]
-offsets = PackedFloat32Array(0, 0.0502513, 0.2, 0.21, 0.215, 0.225)
-colors = PackedColorArray(1, 1, 1, 1, 0.671795, 0.671795, 0.671795, 1, 0.18359, 0.18359, 0.18359, 1, 0.619608, 0.0313726, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7h2b2"]
-gradient = SubResource("Gradient_ghhvy")
+[ext_resource type="Texture2D" uid="uid://5q2yvqft25ta" path="res://assets/parchment_alpha.png" id="2_adh6i"]
+[ext_resource type="Texture2D" uid="uid://cbpg53tbtmh55" path="res://assets/burning_paper_gradient.tres" id="2_dm588"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ns1km"]
 frequency = 0.005
@@ -23,12 +18,51 @@ shader_parameter/emission_strength = 1.0
 shader_parameter/burn = 0.34
 shader_parameter/tex = ExtResource("2_adh6i")
 shader_parameter/noise = SubResource("NoiseTexture2D_xsngp")
-shader_parameter/gradient = SubResource("GradientTexture1D_7h2b2")
+shader_parameter/gradient = ExtResource("2_dm588")
 
 [sub_resource type="QuadMesh" id="QuadMesh_671fo"]
 
 [node name="BurningPaper" type="Node3D"]
+script = ExtResource("1_lunqn")
 
 [node name="Sheet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_3gr06")
 mesh = SubResource("QuadMesh_671fo")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 2
+
+[node name="BurnLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Burn"
+
+[node name="BurnSlider" type="HSlider" parent="GridContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.005
+value = 0.34
+
+[node name="EmissionLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Emission"
+
+[node name="EmissionSlider" type="HSlider" parent="GridContainer"]
+layout_mode = 2
+max_value = 5.0
+step = 0.05
+value = 1.0
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+light_energy = 0.3
+
+[connection signal="value_changed" from="GridContainer/BurnSlider" to="." method="_on_burn_slider_value_changed"]
+[connection signal="value_changed" from="GridContainer/EmissionSlider" to="." method="_on_emission_slider_value_changed"]

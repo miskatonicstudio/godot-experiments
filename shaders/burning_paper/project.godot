@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="Burning Paper"
-config/features=PackedStringArray("4.1", "Forward Plus")
-config/icon="res://icon.svg"
+run/main_scene="res://burning_paper.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://assets/icon.svg"
