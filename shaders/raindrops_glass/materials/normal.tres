@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ovoy7eitorok"]
+
+[ext_resource type="Shader" path="res://materials/normal.gdshader" id="1_p7675"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_p7675")
+shader_parameter/test_color = Color(0.407904, 0.407904, 0.815824, 1)
