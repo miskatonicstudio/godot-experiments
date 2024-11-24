@@ -1,0 +1,181 @@
+[gd_scene load_steps=22 format=3 uid="uid://cgd87sr65rhwl"]
+
+[ext_resource type="Script" path="res://raindrops_glass.gd" id="1_ji8jg"]
+[ext_resource type="Shader" path="res://materials/glass.gdshader" id="2_ru0vw"]
+[ext_resource type="Material" uid="uid://ovoy7eitorok" path="res://materials/normal.tres" id="3_5oxhh"]
+[ext_resource type="Shader" path="res://materials/normal.gdshader" id="3_v0lne"]
+[ext_resource type="VideoStream" path="res://assets/rain_normal_map.ogv" id="4_dkee5"]
+[ext_resource type="Texture2D" uid="uid://dwvhtvvutaly5" path="res://assets/NightEnvironmentHDRI005_1K-HDR.exr" id="5_4vmmn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8r0yb"]
+render_priority = 0
+shader = ExtResource("2_ru0vw")
+shader_parameter/distortion_size = 0.2
+
+[sub_resource type="QuadMesh" id="7"]
+
+[sub_resource type="TextMesh" id="TextMesh_au54m"]
+text = "Using Blender Metaball"
+depth = 0.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_i83a1"]
+viewport_path = NodePath("RainParticlesSubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xnd4"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_ru0vw")
+shader_parameter/distortion_size = 0.2
+shader_parameter/raindrops_normal = SubResource("ViewportTexture_i83a1")
+
+[sub_resource type="TextMesh" id="TextMesh_5ya4l"]
+text = "Using Godot particle trail"
+depth = 0.0
+
+[sub_resource type="Environment" id="Environment_1jcs0"]
+
+[sub_resource type="QuadMesh" id="4"]
+size = Vector2(20, 20)
+
+[sub_resource type="ParticleProcessMaterial" id="10"]
+lifetime_randomness = 0.1
+emission_shape = 3
+emission_box_extents = Vector3(10, 10, 1)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+gravity = Vector3(0, -2, 0)
+linear_accel_min = 5.0
+linear_accel_max = 5.0
+scale_min = 0.2
+scale_max = 0.2
+
+[sub_resource type="Curve" id="Curve_jh1xk"]
+_data = [Vector2(0, 0.421053), 0.0, 8.46491, 0, 0, Vector2(0.0880829, 1), 0.478019, 0.478019, 0, 0, Vector2(1, 0.294737), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c7621"]
+render_priority = 0
+shader = ExtResource("3_v0lne")
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_bm21v"]
+material = SubResource("ShaderMaterial_c7621")
+curve = SubResource("Curve_jh1xk")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_axfyt"]
+panorama = ExtResource("5_4vmmn")
+filter = false
+
+[sub_resource type="Sky" id="Sky_1turk"]
+sky_material = SubResource("PanoramaSkyMaterial_axfyt")
+
+[sub_resource type="Environment" id="Environment_43d7s"]
+background_mode = 2
+sky = SubResource("Sky_1turk")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[node name="RaindropsGlass" type="Node3D"]
+script = ExtResource("1_ji8jg")
+
+[node name="Pivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.843)
+current = true
+
+[node name="GlassWithVideo" type="MeshInstance3D" parent="Pivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -0.6, 0, -2.98023e-08)
+material_override = SubResource("ShaderMaterial_8r0yb")
+mesh = SubResource("7")
+skeleton = NodePath("../..")
+
+[node name="Description" type="MeshInstance3D" parent="Pivot/GlassWithVideo"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.6, 0)
+mesh = SubResource("TextMesh_au54m")
+
+[node name="GlassWithParticles" type="MeshInstance3D" parent="Pivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 0)
+material_override = SubResource("ShaderMaterial_1xnd4")
+mesh = SubResource("7")
+skeleton = NodePath("../..")
+
+[node name="Description" type="MeshInstance3D" parent="Pivot/GlassWithParticles"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.6, 0)
+mesh = SubResource("TextMesh_5ya4l")
+
+[node name="RainParticlesSubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(2048, 2048)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="RainParticlesSubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0, 0, 10)
+environment = SubResource("Environment_1jcs0")
+projection = 1
+size = 20.0
+
+[node name="Background" type="MeshInstance3D" parent="RainParticlesSubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0, 0, -3)
+material_override = ExtResource("3_5oxhh")
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="Particles" type="GPUParticles3D" parent="RainParticlesSubViewport"]
+amount = 100
+lifetime = 5.0
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.8
+process_material = SubResource("10")
+draw_pass_1 = SubResource("TubeTrailMesh_bm21v")
+
+[node name="RainVideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(2048, 2048)
+offset_right = 2048.0
+offset_bottom = 2048.0
+stream = ExtResource("4_dkee5")
+autoplay = true
+loop = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_43d7s")
+
+[node name="DistortionSizeControls" type="MarginContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DistortionSizeControls"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="DistortionSizeControls/HBoxContainer"]
+layout_mode = 2
+text = "Distortion size"
+
+[node name="DistortionSize" type="HSlider" parent="DistortionSizeControls/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.2
+
+[connection signal="finished" from="RainVideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="value_changed" from="DistortionSizeControls/HBoxContainer/DistortionSize" to="." method="_on_distortion_size_value_changed"]

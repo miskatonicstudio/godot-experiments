@@ -11,6 +11,10 @@ config_version=5
 [application]
 
 config/name="Raindrops Glass"
-run/main_scene="res://raindrops.tscn"
-config/features=PackedStringArray("4.1")
-config/icon="res://icon.svg"
+run/main_scene="res://raindrops_glass.tscn"
+config/features=PackedStringArray("4.3")
+config/icon="res://assets/icon.svg"
+
+[filesystem]
+
+import/blender/enabled=false
