@@ -12,4 +12,4 @@ config_version=5
 
 config/name="UV Light Shader"
 run/main_scene="res://UVLight.tscn"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.3")
