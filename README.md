@@ -8,8 +8,9 @@ https://github.com/user-attachments/assets/8d5d1f6d-a10f-4ed5-bdd2-720b9ecd6b5a
 
 https://github.com/user-attachments/assets/ecf98cf7-b969-48a7-984a-e550e893b2fb
 
+https://github.com/user-attachments/assets/bb518b33-9c35-4a65-8977-2eefe427a873
+
 ![Screenshot](./shaders/aurora_borealis/screenshot.jpg?raw=true)
-![Screenshot](./shaders/frosted_glass/screenshot.jpg?raw=true)
 ![Screenshot](./shaders/uv_light_shader/screenshot.jpg?raw=true)
 ![Screenshot](./shaders/screen_distortion_shader/screenshot.png?raw=true)
 ![Screenshot](./shaders/pride_flag_shader/screenshot.jpg?raw=true)

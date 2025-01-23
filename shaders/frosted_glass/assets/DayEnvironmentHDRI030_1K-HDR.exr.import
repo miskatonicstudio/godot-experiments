@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g3l12dtchliq"
-path.bptc="res://.godot/imported/glass.png-b25359403f040fff4041ec96179e1d08.bptc.ctex"
+uid="uid://d3oocjm0tf33m"
+path.bptc="res://.godot/imported/DayEnvironmentHDRI030_1K-HDR.exr-d020c2fafe09f90c906d8b3547fba3d7.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,24 +11,24 @@ metadata={
 
 [deps]
 
-source_file="res://glass.png"
-dest_files=["res://.godot/imported/glass.png-b25359403f040fff4041ec96179e1d08.bptc.ctex"]
+source_file="res://assets/DayEnvironmentHDRI030_1K-HDR.exr"
+dest_files=["res://.godot/imported/DayEnvironmentHDRI030_1K-HDR.exr-d020c2fafe09f90c906d8b3547fba3d7.bptc.ctex"]
 
 [params]
 
 compress/mode=2
-compress/high_quality=true
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
+roughness/mode=0
 roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/normal_map_invert_y=true
+process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
