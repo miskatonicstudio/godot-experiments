@@ -1,0 +1,111 @@
+[gd_scene load_steps=13 format=3 uid="uid://k50ee3gg0avs"]
+
+[ext_resource type="Script" path="res://frosted_glass.gd" id="1_4f40y"]
+[ext_resource type="Texture2D" uid="uid://d3oocjm0tf33m" path="res://assets/DayEnvironmentHDRI030_1K-HDR.exr" id="1_73pvq"]
+[ext_resource type="Shader" path="res://frosted_glass.gdshader" id="3_iy5d5"]
+[ext_resource type="Texture2D" uid="uid://g3l12dtchliq" path="res://assets/glass.png" id="4_6klhq"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6lkp5"]
+panorama = ExtResource("1_73pvq")
+
+[sub_resource type="Sky" id="Sky_kgg0e"]
+sky_material = SubResource("PanoramaSkyMaterial_6lkp5")
+
+[sub_resource type="Environment" id="Environment_vqxft"]
+background_mode = 2
+sky = SubResource("Sky_kgg0e")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_75414"]
+render_priority = 0
+shader = ExtResource("3_iy5d5")
+shader_parameter/distortion_size = 0.2
+shader_parameter/glass_normal = ExtResource("4_6klhq")
+
+[sub_resource type="QuadMesh" id="QuadMesh_swqoq"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_frxoy"]
+fractal_gain = 0.7
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wdlip"]
+as_normal_map = true
+noise = SubResource("FastNoiseLite_frxoy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t25yn"]
+render_priority = 0
+shader = ExtResource("3_iy5d5")
+shader_parameter/distortion_size = 0.2
+shader_parameter/glass_normal = SubResource("NoiseTexture2D_wdlip")
+
+[node name="FrostedGlass" type="Node3D"]
+script = ExtResource("1_4f40y")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vqxft")
+
+[node name="Pivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="GlassTexture" type="MeshInstance3D" parent="Pivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0, 0)
+material_override = SubResource("ShaderMaterial_75414")
+mesh = SubResource("QuadMesh_swqoq")
+skeleton = NodePath("../..")
+
+[node name="Label3D" type="Label3D" parent="Pivot/GlassTexture"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+pixel_size = 0.003
+text = "Using .png file"
+
+[node name="GlassNoise" type="MeshInstance3D" parent="Pivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0, 0)
+material_override = SubResource("ShaderMaterial_t25yn")
+mesh = SubResource("QuadMesh_swqoq")
+skeleton = NodePath("../..")
+
+[node name="Label3D" type="Label3D" parent="Pivot/GlassNoise"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+pixel_size = 0.003
+text = "Using NoiseTexture2D"
+
+[node name="DistortionSizeControls" type="MarginContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -157.5
+offset_top = -40.0
+offset_right = 157.5
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DistortionSizeControls"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="DistortionSizeControls/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+text = "Distortion size"
+
+[node name="DistortionSize" type="HSlider" parent="DistortionSizeControls/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.2
+
+[connection signal="value_changed" from="DistortionSizeControls/HBoxContainer/DistortionSize" to="." method="_on_distortion_size_value_changed"]
