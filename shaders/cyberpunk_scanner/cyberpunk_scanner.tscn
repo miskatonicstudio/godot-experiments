@@ -1,0 +1,183 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmesp6j6hls2u"]
+
+[ext_resource type="ArrayMesh" uid="uid://bxiskb2bh2a8p" path="res://assets/cryo.obj" id="1_6niyy"]
+[ext_resource type="Script" path="res://cyberpunk_scanner.gd" id="1_onqpd"]
+[ext_resource type="Texture2D" uid="uid://dvyra2xmjcdup" path="res://assets/gradient.png" id="2_gxo5c"]
+[ext_resource type="Texture2D" uid="uid://buh0hw1w57j7x" path="res://assets/cryo_albedo.png" id="2_o8o1c"]
+[ext_resource type="Shader" path="res://cyberpunk_scanner.gdshader" id="5_ohhdt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wlxb1"]
+albedo_texture = ExtResource("2_gxo5c")
+uv1_scale = Vector3(40, 40, 40)
+texture_filter = 5
+proximity_fade_distance = 3.0
+distance_fade_max_distance = 20.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bw4wd"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gyteq"]
+albedo_texture = ExtResource("2_o8o1c")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8772c"]
+shader = ExtResource("5_ohhdt")
+shader_parameter/scanning_progress = 0.0
+shader_parameter/visibility = 0.0
+shader_parameter/color = Color(0, 1, 0, 1)
+shader_parameter/initial_outline_pixel_size = 32.0
+shader_parameter/final_outline_pixel_size = 2.0
+shader_parameter/initial_fill_transparency = 2.0
+shader_parameter/final_fill_transparency = 0.15
+shader_parameter/initial_pixelize_power = 9.0
+shader_parameter/final_pixelize_power = 1.0
+
+[node name="CyberpunkScanner" type="Node3D"]
+script = ExtResource("1_onqpd")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_wlxb1")
+mesh = SubResource("PlaneMesh_bw4wd")
+
+[node name="ScannablePod" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+layers = 3
+material_override = SubResource("StandardMaterial3D_gyteq")
+mesh = ExtResource("1_6niyy")
+
+[node name="NonScannablePod" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+material_override = SubResource("StandardMaterial3D_gyteq")
+mesh = ExtResource("1_6niyy")
+
+[node name="Pivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera" type="Camera3D" parent="Pivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 2.5, 3.5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 0, 0)
+shadow_enabled = true
+
+[node name="ScanningViewport" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_8772c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="ScanningViewport"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ScanningCamera" type="Camera3D" parent="ScanningViewport/SubViewport"]
+unique_name_in_owner = true
+cull_mask = 1047554
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_right = 254.0
+offset_bottom = 284.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Scan" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+text = "Start scanning"
+
+[node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="ColorLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Color"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="InitOutlineLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Initial outline size"
+
+[node name="InitOutline" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+value = 32.0
+alignment = 2
+
+[node name="FinalOutlineLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Final outline size"
+
+[node name="FinalOutline" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+value = 2.0
+alignment = 2
+
+[node name="InitFillLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Initial transparency"
+
+[node name="InitFill" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+max_value = 4.0
+step = 0.01
+value = 2.0
+alignment = 2
+
+[node name="FinalFillLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Final transparency"
+
+[node name="FinalFill" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.15
+alignment = 2
+
+[node name="InitPixelLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Initial pixelization"
+
+[node name="InitPixel" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+max_value = 10.0
+value = 9.0
+alignment = 2
+
+[node name="FinalPixelLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Final pixelization"
+
+[node name="FinalPixel" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+max_value = 10.0
+value = 1.0
+alignment = 2
+
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/Scan" to="." method="_on_scan_toggled"]
+[connection signal="color_changed" from="Panel/MarginContainer/VBoxContainer/GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/GridContainer/InitOutline" to="." method="_on_init_outline_value_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/GridContainer/FinalOutline" to="." method="_on_final_outline_value_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/GridContainer/InitFill" to="." method="_on_init_fill_value_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/GridContainer/FinalFill" to="." method="_on_final_fill_value_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/GridContainer/InitPixel" to="." method="_on_init_pixel_value_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/GridContainer/FinalPixel" to="." method="_on_final_pixel_value_changed"]
