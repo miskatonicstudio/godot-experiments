@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bxiskb2bh2a8p"
+path="res://.godot/imported/cryo.obj-e5a3441ad6277498afc662e9a8a635f4.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cryo.obj-e5a3441ad6277498afc662e9a8a635f4.mesh"]
+
+source_file="res://assets/cryo.obj"
+dest_files=["res://.godot/imported/cryo.obj-e5a3441ad6277498afc662e9a8a635f4.mesh", "res://.godot/imported/cryo.obj-e5a3441ad6277498afc662e9a8a635f4.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
