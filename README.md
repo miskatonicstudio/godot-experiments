@@ -8,11 +8,12 @@ https://github.com/user-attachments/assets/7529fcfc-c7df-46fb-ba22-e67f0271234c
 
 https://github.com/user-attachments/assets/bb518b33-9c35-4a65-8977-2eefe427a873
 
+https://github.com/user-attachments/assets/d4320495-af65-453d-99c4-c2c7ecc44484
+
 https://github.com/user-attachments/assets/010b3a47-25a5-4cbe-b6ef-8bba37ce947e
 
 https://github.com/user-attachments/assets/ecf98cf7-b969-48a7-984a-e550e893b2fb
 
-![Screenshot](./shaders/aurora_borealis/screenshot.jpg?raw=true)
 ![Screenshot](./shaders/screen_distortion_shader/screenshot.png?raw=true)
 ![Screenshot](./shaders/pride_flag_shader/screenshot.jpg?raw=true)
 ![Screenshot](./shaders/hexagon_pattern/screenshot.jpg?raw=true)

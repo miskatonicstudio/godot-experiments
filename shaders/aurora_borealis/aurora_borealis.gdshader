@@ -1,19 +1,21 @@
 shader_type spatial;
 
-uniform float speed = 0.02;
+uniform float speed = 0.01;
 uniform vec4 color : source_color;
 uniform float emission_strength = 5.0;
 uniform sampler2D noise;
 uniform float offset = 0.0;
 uniform float smoothness = 0.15;
 uniform float distort = 1.0;
-uniform float scale = 1.0;
+uniform float scale = 0.02;
 
-varying vec3 world_camera;
-varying vec3 world_position;
+group_uniforms Raymarching;
+uniform float STEP = 0.01;
+uniform float BASE_DENSITY = 2.0;
 
-const float STEP = 0.01;
-const float BASE_DENSITY = 2.0;
+varying vec3 camera_position;
+varying vec3 vertex_position;
+
 
 float amplify(float value) {
 	float magic_number = 0.166504;
@@ -66,16 +68,16 @@ float ray_march(vec3 ray_origin, vec3 ray_direction, float start, float time) {
 }
 
 void vertex() {
-	world_position = VERTEX;
+	vertex_position = VERTEX;
 	// Use object space
-	world_camera = (inverse(MODELVIEW_MATRIX) * vec4(0, 0, 0, 1)).xyz;
+	camera_position = (inverse(MODELVIEW_MATRIX) * vec4(0, 0, 0, 1)).xyz;
 }
 
 void fragment() {
-	vec3 ray_origin = world_camera;
-	vec3 ray_direction =  normalize(world_position - ray_origin);
+	vec3 ray_origin = camera_position;
+	vec3 ray_direction =  normalize(vertex_position - ray_origin);
 	float density = ray_march(
-		ray_origin, ray_direction, length(world_camera - world_position), TIME
+		ray_origin, ray_direction, length(camera_position - vertex_position), TIME
 	);
 	
 	ALBEDO = color.rgb * density;

@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Aurora Borealis"
-run/main_scene="res://aurora.tscn"
-config/features=PackedStringArray("4.1")
-config/icon="res://icon.png"
+run/main_scene="res://aurora_borealis.tscn"
+config/features=PackedStringArray("4.3")
+config/icon="res://assets/icon.png"
 
 [physics]
 

@@ -1,0 +1,172 @@
+[gd_scene load_steps=11 format=3 uid="uid://iambpuaqot0s"]
+
+[ext_resource type="Shader" path="res://aurora_borealis.gdshader" id="1_dj7yk"]
+[ext_resource type="Script" path="res://aurora_borealis.gd" id="1_omheu"]
+[ext_resource type="Texture2D" uid="uid://dgxttgm4eo4k2" path="res://assets/NightSkyHDRI007_1K-HDR.exr" id="2_eicq7"]
+
+[sub_resource type="FastNoiseLite" id="14"]
+frequency = 0.0039
+fractal_octaves = 3
+fractal_weighted_strength = 0.5
+
+[sub_resource type="NoiseTexture2D" id="15"]
+normalize = false
+noise = SubResource("14")
+
+[sub_resource type="ShaderMaterial" id="3"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_dj7yk")
+shader_parameter/speed = 0.01
+shader_parameter/color = Color(0.38, 0.92, 0.43, 1)
+shader_parameter/emission_strength = 5.0
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.02
+shader_parameter/noise = SubResource("15")
+shader_parameter/STEP = 0.01
+shader_parameter/BASE_DENSITY = 2.0
+
+[sub_resource type="BoxMesh" id="1"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_toisq"]
+panorama = ExtResource("2_eicq7")
+
+[sub_resource type="Sky" id="Sky_b2bb8"]
+sky_material = SubResource("PanoramaSkyMaterial_toisq")
+
+[sub_resource type="Environment" id="Environment_wchvq"]
+background_mode = 2
+sky = SubResource("Sky_b2bb8")
+
+[node name="AuroraBorealis" type="Node3D"]
+script = ExtResource("1_omheu")
+
+[node name="Aurora" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("3")
+mesh = SubResource("1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wchvq")
+
+[node name="Pivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.906308, -0.422618, 0, 0.422618, 0.906308, 0, -0.9, 1.5)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 93.0
+offset_bottom = 106.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Defaults" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Defaults"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="ColorLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Color"
+
+[node name="Color" type="ColorPickerButton" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+color = Color(0.380392, 0.921569, 0.431373, 1)
+edit_alpha = false
+
+[node name="SpeedLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Speed"
+
+[node name="Speed" type="SpinBox" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.001
+value = 0.01
+alignment = 2
+
+[node name="SmoothnessLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Smoothness"
+
+[node name="Smoothness" type="SpinBox" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.15
+alignment = 2
+
+[node name="DistortLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Distort"
+
+[node name="Distort" type="SpinBox" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.01
+value = 1.0
+alignment = 2
+
+[node name="ScaleLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Scale"
+
+[node name="Scale" type="SpinBox" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.02
+alignment = 2
+
+[node name="StepLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "STEP"
+
+[node name="Step" type="SpinBox" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 0.01
+alignment = 2
+
+[node name="BaseDensityLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "BASE_DENSITY"
+
+[node name="BaseDensity" type="SpinBox" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 10.0
+step = 0.1
+value = 2.0
+alignment = 2
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/Defaults" to="." method="_on_defaults_pressed"]
+[connection signal="color_changed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Color" to="." method="_on_color_color_changed"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Speed" to="." method="_on_speed_value_changed"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Smoothness" to="." method="_on_smoothness_value_changed"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Distort" to="." method="_on_distort_value_changed"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Scale" to="." method="_on_scale_value_changed"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Step" to="." method="_on_step_value_changed"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/BaseDensity" to="." method="_on_base_density_value_changed"]
