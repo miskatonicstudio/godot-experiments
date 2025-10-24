@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcs7mbvdlu6oa"]
+[gd_scene load_steps=11 format=3 uid="uid://bcs7mbvdlu6oa"]
 
+[ext_resource type="Script" path="res://flag.gd" id="1_ftp0x"]
 [ext_resource type="Shader" path="res://pride_flag.gdshader" id="1_kwgjv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlnuu"]
@@ -22,11 +23,89 @@ sky_material = SubResource("ProceduralSkyMaterial_tkkwe")
 background_mode = 2
 sky = SubResource("Sky_mm3y3")
 
+[sub_resource type="Animation" id="Animation_dgwyx"]
+resource_name = "move_camera"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4, 6, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.523599, 0), Vector3(0, 0, 0), Vector3(0, 0.523599, 0), Vector3(0, 0, 0), Vector3(0, -0.523599, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xoly6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wfx5f"]
+_data = {
+"RESET": SubResource("Animation_xoly6"),
+"move_camera": SubResource("Animation_dgwyx")
+}
+
 [node name="Flag" type="Node3D"]
+script = ExtResource("1_ftp0x")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 material_override = SubResource("ShaderMaterial_dlnuu")
 mesh = SubResource("QuadMesh_br36m")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v0uop")
+
+[node name="Pivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wfx5f")
+}
+autoplay = "move_camera"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer"]
+layout_mode = 2
+selected = 3
+item_count = 4
+popup/item_0/text = "Rainbow"
+popup/item_1/text = "Trans"
+popup/item_1/id = 1
+popup/item_2/text = "Asexual"
+popup/item_2/id = 2
+popup/item_3/text = "Progressive"
+popup/item_3/id = 3
+
+[connection signal="item_selected" from="MarginContainer/OptionButton" to="." method="_on_option_button_item_selected"]

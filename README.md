@@ -14,8 +14,9 @@ https://github.com/user-attachments/assets/010b3a47-25a5-4cbe-b6ef-8bba37ce947e
 
 https://github.com/user-attachments/assets/ecf98cf7-b969-48a7-984a-e550e893b2fb
 
+https://github.com/user-attachments/assets/80b7fd07-b386-4c0b-a8e2-0459baf00093
+
 ![Screenshot](./shaders/screen_distortion/screenshot.png?raw=true)
-![Screenshot](./shaders/pride_flag/screenshot.jpg?raw=true)
 ![Screenshot](./shaders/hexagon_pattern/screenshot.jpg?raw=true)
 ![Screenshot](./engine_flame_shader/screenshot.png?raw=true)
 ![Screenshot](./shaders/electric_wire/screenshot.png?raw=true)
