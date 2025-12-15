@@ -39,3 +39,9 @@ func _on_TextureRect_gui_input(event):
 			texture_rect.material.set_shader_parameter('gol', tex)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			texture_rect.material.set_shader_parameter('gol', _gol_texture);
+
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed('ui_cancel'):
+		%Popup.visible = not %Popup.visible
+		%ESCLabel.visible = not %ESCLabel.visible

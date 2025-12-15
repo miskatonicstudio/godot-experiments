@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfk3s7g0tl51v"]
+[gd_scene load_steps=7 format=3 uid="uid://bfk3s7g0tl51v"]
 
 [ext_resource type="Script" path="res://GoLGodot.gd" id="1"]
 [ext_resource type="Shader" path="res://gol.gdshader" id="2"]
@@ -15,6 +15,9 @@ fractal_lacunarity = 0.1
 width = 128
 height = 128
 noise = SubResource("2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vkasp"]
+bg_color = Color(0.6, 0.6, 0.6, 0.752941)
 
 [node name="GoLGodot" type="Control"]
 process_mode = 3
@@ -55,6 +58,90 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = SubResource("3")
+
+[node name="Popup" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vkasp")
+
+[node name="CenterContainer" type="CenterContainer" parent="Popup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Popup/CenterContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 2
+
+[node name="LMBExplanation" type="Label" parent="Popup/CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 24
+text = "Pause/Step"
+
+[node name="LMB" type="Label" parent="Popup/CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 24
+text = "Left Mouse Click"
+horizontal_alignment = 1
+
+[node name="RMBExplanation" type="Label" parent="Popup/CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 24
+text = "Resume"
+
+[node name="RMB" type="Label" parent="Popup/CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 24
+text = "Right Mouse Click"
+horizontal_alignment = 1
+
+[node name="ESCExplanation" type="Label" parent="Popup/CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 24
+text = "This popup"
+
+[node name="ESC" type="Label" parent="Popup/CenterContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 24
+text = "ESC"
+horizontal_alignment = 1
+
+[node name="ESCLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.247059)
+text = "ESC"
 
 [connection signal="resized" from="." to="." method="_on_GoLGodot_resized"]
 [connection signal="gui_input" from="SubViewportContainer/SubViewport/TextureRect" to="." method="_on_TextureRect_gui_input"]
